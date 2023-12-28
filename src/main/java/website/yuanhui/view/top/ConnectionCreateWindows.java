@@ -1,10 +1,11 @@
 
 package website.yuanhui.view.top;
 
-import java.awt.GridLayout;
-import javax.swing.JFrame;
 import website.yuanhui.action.SaveConnectionInfo;
 import website.yuanhui.util.ComponentUtil;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class ConnectionCreateWindows extends JFrame {
     private static final ConnectionCreateWindows instance = new ConnectionCreateWindows();
@@ -13,7 +14,7 @@ public class ConnectionCreateWindows extends JFrame {
         this.setTitle("create connection ");
         this.setSize(800, 300);
         this.setDefaultCloseOperation(1);
-        GridLayout manager = new GridLayout(5, 2, 10, 20);
+        GridLayout manager = new GridLayout(6, 2, 10, 20);
         this.setLayout(manager);
         this.init();
         this.setVisible(false);
@@ -36,6 +37,8 @@ public class ConnectionCreateWindows extends JFrame {
         this.add(ComponentUtil.textField("password"));
         this.add(ComponentUtil.label("链接"));
         this.add(ComponentUtil.textField("url"));
+        this.add(ComponentUtil.label("是否开启SSL校验"));
+        this.add(new JCheckBox("ssl"));
         this.add(ComponentUtil.createMenuItem("提交", "connectSubmit", new SaveConnectionInfo()));
         this.add(ComponentUtil.createMenuItem("取消", "connectCancel", new SaveConnectionInfo()));
     }

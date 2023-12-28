@@ -1,16 +1,18 @@
 
 package website.yuanhui.action;
 
+import website.yuanhui.util.JDBCUtil;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import website.yuanhui.util.JDBCUtil;
 
 public class ConnectionInfo {
     private String username;
     private String password;
     private String url;
     private String name;
+    private String ssl;
 
     public ConnectionInfo() {
     }
@@ -60,6 +62,7 @@ public class ConnectionInfo {
                 record.setPassword(result.getString("PASSWORD"));
                 record.setUsername(result.getString("USER_NAME"));
                 record.setUrl(result.getString("URL"));
+                record.setSsl(result.getString("SSL"));
                 target.add(record);
             }
         } catch (Exception var3) {
@@ -67,5 +70,13 @@ public class ConnectionInfo {
         }
 
         return target;
+    }
+
+    public String getSsl() {
+        return ssl;
+    }
+
+    public void setSsl(String ssl) {
+        this.ssl = ssl;
     }
 }
