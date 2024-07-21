@@ -21,18 +21,12 @@
             <version>3.43.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.influxdb</groupId>
-            <artifactId>influxdb-client-java</artifactId>
-            <version>6.9.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.influxdb</groupId>
             <artifactId>influxdb-java</artifactId>
             <version>2.23</version>
         </dependency>
     </dependencies>
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -54,13 +48,44 @@
                 <version>1.7.5</version>
                 <executions>
                     <execution>
+                        <id>mac</id>
                         <phase>package</phase>
                         <goals>
                             <goal>package</goal>
                         </goals>
                         <configuration>
+                            <assetsDir>/Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/assets</assetsDir>
+                            <iconFile>
+                                /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/influxdb-desktop.icns
+                            </iconFile>
                             <mainClass>website.yuanhui.Main</mainClass>
+                            <customizedJre>false</customizedJre>
+                            <jrePath>/Users/zzzz/Library/Java/JavaVirtualMachines/corretto-1.8.0_392/Contents/Home/jre
+                            </jrePath>
                             <bundleJre>true</bundleJre>
+                            <vmArgs>
+                                <vmArg>
+                                    -Xms256m
+                                </vmArg>
+                                <vmArg>
+                                    -Xmx512m
+                                </vmArg>
+                            </vmArgs>
+                            <macConfig>
+                                <icnsFile>
+                                    /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/asset/mac/influxdb-desktop.icns
+                                </icnsFile>
+                            </macConfig>
+                            <winConfig>
+                                <iconFile>
+                                    /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/asset/mac/influxdb-desktop.ico
+                                </iconFile>
+                            </winConfig>
+                            <additionalResources>
+                                <additionalResource>
+                                    /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/influxdb-desktop.l4j.ini
+                                </additionalResource>
+                            </additionalResources>
                         </configuration>
                     </execution>
                 </executions>

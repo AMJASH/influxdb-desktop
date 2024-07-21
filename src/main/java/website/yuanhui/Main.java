@@ -1,12 +1,12 @@
 package website.yuanhui;
 
+
 import website.yuanhui.view.MainWindows;
 
-public class Main {
-    public Main() {
-    }
+import javax.swing.SwingUtilities;
 
+public class Main {
     public static void main(String[] args) {
-        (new MainWindows()).open();
+        SwingUtilities.invokeLater(() -> new MainWindows().setVisible(true));
     }
 }
