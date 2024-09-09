@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class InfluxdbV1Client implements IClient {
     private final ConnectInfoV1 info;
@@ -63,21 +62,6 @@ public class InfluxdbV1Client implements IClient {
         }
     }
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException {
-        ConnectInfoV1 info1 = new ConnectInfoV1();
-        info1.setId(1L);
-        info1.setUsername("apmiot");
-        info1.setUri("https://10.35.42.171:8086");
-        info1.setPassword("1-1equal0YES");
-        InfluxdbV1Client influxdbV1Client = new InfluxdbV1Client(info1);
-        List<String> strings = influxdbV1Client.dbNames();
-        for (String string : strings) {
-            System.out.println(string);
-        }
-        List<String> strings1 = influxdbV1Client.measurementNames("aaa");
-        System.out.println(strings1);
-    }
-
     @Override
     public List<String> dbNames() throws NoSuchAlgorithmException, KeyManagementException {
         try (InfluxDB connect = getConnect(info)) {
@@ -89,7 +73,7 @@ public class InfluxdbV1Client implements IClient {
                 for (QueryResult.Series series : seriesList) {
                     List<List<Object>> values = series.getValues();
                     for (List<Object> objects : values) {
-                        target.addAll(objects.stream().map(Objects::toString).collect(Collectors.toList()));
+                        target.addAll(objects.stream().map(Objects::toString).toList());
                     }
                 }
             }
@@ -115,7 +99,7 @@ public class InfluxdbV1Client implements IClient {
                 for (QueryResult.Series series : seriesList) {
                     List<List<Object>> values = series.getValues();
                     for (List<Object> objects : values) {
-                        target.addAll(objects.stream().map(Objects::toString).collect(Collectors.toList()));
+                        target.addAll(objects.stream().map(Objects::toString).toList());
                     }
                 }
             }

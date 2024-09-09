@@ -133,25 +133,33 @@ public class CloseTabComponent extends JPanel {
         closeLeftItem.addActionListener(e -> SwingUtilities.invokeLater(() -> {
             int currentIndex = parent.indexOfTabComponent(this);
             for (int i = 0; i < currentIndex; i++) {
-                parent.remove(i);
+                parent.remove(0);
             }
         }));
         closeRightItem.addActionListener(e -> SwingUtilities.invokeLater(() -> {
             int currentIndex = parent.indexOfTabComponent(this);
             for (int i = parent.getTabCount() - 1; i > currentIndex; i--) {
-                parent.remove(i);
+                parent.remove(currentIndex + 1);
             }
         }));
         closeAllItem.addActionListener(e -> SwingUtilities.invokeLater(parent::removeAll));
         closeOtherItem.addActionListener(e -> SwingUtilities.invokeLater(() -> {
             int currentIndex = parent.indexOfTabComponent(this);
-            for (int i = parent.getTabCount() - 1; i > currentIndex; i--) {
-                parent.remove(i);
+            int tabCount = parent.getTabCount();
+            while (currentIndex < tabCount) {
+                if (currentIndex + 1 < tabCount) {
+                    parent.remove(currentIndex + 1);
+                    tabCount--;
+                } else {
+                    break;
+                }
             }
-            for (int i = 0; i < currentIndex - 1; i++) {
-                parent.remove(i);
+            while (tabCount > 1) {
+                parent.remove(0);
+                tabCount--;
             }
         }));
+
         copySql.addActionListener(e -> {
             Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             systemClipboard.setContents(new StringSelection(titleLabel.getToolTipText()), null);

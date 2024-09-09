@@ -41,7 +41,8 @@ public class MainWindows extends JFrame {
         JMenuItem linkManagementRefresh = new JMenuItem(I18NUtil.getString("MainWindows.option.LinkRefresh"));
         //菜单初始化
         InfluxDBConfigView view = new InfluxDBConfigView(this);
-        linkManagementMenuItem.addActionListener(e -> new InfluxDBConfigController(view).show());
+        InfluxDBConfigController influxDBConfigController = new InfluxDBConfigController(view);
+        linkManagementMenuItem.addActionListener(e -> influxDBConfigController.show());
         //initLeftPanel
         ConnectListView connectListView = new ConnectListView();
         ConnectionListController connectionListController = new ConnectionListController(connectListView);
@@ -169,7 +170,7 @@ public class MainWindows extends JFrame {
                     filePath += end;
                 }
                 if (single) {
-                    exportSingleSeriesToCSV(series.get(0), filePath);
+                    exportSingleSeriesToCSV(series.getFirst(), filePath);
                 } else {
                     exportMultipleSeriesToZip(series, filePath);
                 }

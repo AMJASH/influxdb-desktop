@@ -7,11 +7,11 @@
     <groupId>website.yuanhui</groupId>
     <artifactId>influxdb-desktop</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <name>InfluxDb Desktop</name>
     <properties>
         <exec.mainClass>website.yuanhui.Main</exec.mainClass>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -25,21 +25,20 @@
             <artifactId>influxdb-java</artifactId>
             <version>2.23</version>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio-jvm</artifactId>
+            <version>3.4.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>website.yuanhui.Main</mainClass>
-                        </manifest>
-                    </archive>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -48,44 +47,31 @@
                 <version>1.7.5</version>
                 <executions>
                     <execution>
-                        <id>mac</id>
                         <phase>package</phase>
                         <goals>
                             <goal>package</goal>
                         </goals>
                         <configuration>
-                            <assetsDir>/Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/assets</assetsDir>
-                            <iconFile>
-                                /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/influxdb-desktop.icns
-                            </iconFile>
                             <mainClass>website.yuanhui.Main</mainClass>
-                            <customizedJre>false</customizedJre>
-                            <jrePath>/Users/zzzz/Library/Java/JavaVirtualMachines/corretto-1.8.0_392/Contents/Home/jre
-                            </jrePath>
                             <bundleJre>true</bundleJre>
-                            <vmArgs>
-                                <vmArg>
-                                    -Xms256m
-                                </vmArg>
-                                <vmArg>
-                                    -Xmx512m
-                                </vmArg>
-                            </vmArgs>
+                            <customizedJre>false</customizedJre>
+                            <generateInstaller>true</generateInstaller>
+                            <administratorRequired>false</administratorRequired>
+                            <platform>mac</platform>
+                            <additionalResources/>
                             <macConfig>
-                                <icnsFile>
-                                    /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/asset/mac/influxdb-desktop.icns
+                                <appId>${name}</appId>
+                                <icnsFile>${project.basedir}/src/main/resources/assets/mac/influxdb-desktop.icns
                                 </icnsFile>
+                                <generateDmg>true</generateDmg>
+                                <generatePkg>true</generatePkg>
+                                <relocateJar>true</relocateJar>
+                                <macStartup>SCRIPT</macStartup>
+                                <codesignApp>false</codesignApp>
+                                <hardenedCodesign>false</hardenedCodesign>
+                                <notarizeApp>false</notarizeApp>
+                                <volumeName>${name}</volumeName>
                             </macConfig>
-                            <winConfig>
-                                <iconFile>
-                                    /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/asset/mac/influxdb-desktop.ico
-                                </iconFile>
-                            </winConfig>
-                            <additionalResources>
-                                <additionalResource>
-                                    /Users/zzzz/IdeaProjects/influxdb-desktop/src/main/resources/influxdb-desktop.l4j.ini
-                                </additionalResource>
-                            </additionalResources>
                         </configuration>
                     </execution>
                 </executions>

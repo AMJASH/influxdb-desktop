@@ -132,6 +132,12 @@ public class ExecuteView extends JPanel {
             QueryResult.Result result = queryResult.getResults().get(i);
             String resultTitle = split[i];
             JTabbedPane subTabbedPane = new JTabbedPane();
+            if (result.getSeries() == null) {
+                tabbedPane.addTab(resultTitle, subTabbedPane);
+                CloseTabComponent component = new CloseTabComponent(resultTitle, 50, tabbedPane);
+                tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, component);
+                continue;
+            }
             for (QueryResult.Series series : result.getSeries()) {
                 DefaultTableModel model = new DefaultTableModel();
                 model.setColumnIdentifiers(series.getColumns().toArray());
@@ -157,14 +163,12 @@ public class ExecuteView extends JPanel {
         QueryResult.Result result = new QueryResult.Result();
         List<QueryResult.Series> dataSeries = new ArrayList<>();
         Component selectedComponent = tabbedPane.getComponentAt(selectedIndex);
-        if (selectedComponent instanceof JTabbedPane) {
-            JTabbedPane subTabbedPane = (JTabbedPane) selectedComponent;
+        if (selectedComponent instanceof JTabbedPane subTabbedPane) {
             for (int i = 0; i < subTabbedPane.getTabCount(); i++) {
                 Component subSelectedComponent = subTabbedPane.getComponentAt(i);
-                if (subSelectedComponent instanceof JScrollPane) {
+                if (subSelectedComponent instanceof JScrollPane scrollPane) {
                     QueryResult.Series series = new QueryResult.Series();
                     series.setName(subTabbedPane.getTitleAt(i));
-                    JScrollPane scrollPane = (JScrollPane) subSelectedComponent;
                     JTable table = (JTable) scrollPane.getViewport().getView();
                     DefaultTableModel model = (DefaultTableModel) table.getModel();
                     List<String> columnNames = new ArrayList<>();

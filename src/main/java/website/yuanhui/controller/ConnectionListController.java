@@ -235,13 +235,13 @@ public class ConnectionListController implements EventListener {
         openMeasurement.addActionListener(e -> {
             //新建查询窗口 默认带入执行语句
             //且执行sql查询 默认100条 按照时间倒排
-            String sql = "select * from \"" + measurement.getName() + "\" order by time desc limit 100 ";
+            String sql = "select * from \"" + measurement.getName() + "\" order by time desc limit 100 " + I18NUtil.getString("tz.default") + ";";
             SwingEventListenerContext.publishEvent(new CreateQueryEvent(sql, info, database.getName(), true));
         });
         JMenuItem openSql = new JMenuItem(I18NUtil.getString("ConnectionListController.JMenuItem.openSql"));
         openSql.addActionListener(e -> {
             ///新建查询窗口 默认带入执行语句
-            String sql = "select * from \"" + measurement.getName() + "\" order by time desc limit 100 ";
+            String sql = "select * from \"" + measurement.getName() + "\" order by time desc limit 100 " + I18NUtil.getString("tz.default") + ";";
             SwingEventListenerContext.publishEvent(new CreateQueryEvent(sql, info, database.getName()));
         });
         popup.add(openMeasurement);
